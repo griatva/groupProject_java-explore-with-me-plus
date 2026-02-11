@@ -67,7 +67,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional(readOnly = true)
     public List<CommentDto> getCommentsByEvent(Long eventId, int from, int size) {
-        getEventById(eventId); // Проверка на существование события
+        getEventById(eventId);
 
         Pageable pageable = PageRequest.of(from / size, size, Sort.by("createdOn").descending());
         return commentRepository.findByEvent_Id(eventId, pageable).stream()
@@ -78,7 +78,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional(readOnly = true)
     public List<CommentDto> getUserComments(Long userId, int from, int size) {
-        getUserById(userId); // Проверка на существование пользователя
+        getUserById(userId);
 
         Pageable pageable = PageRequest.of(from / size, size, Sort.by("createdOn").descending());
         return commentRepository.findByAuthor_Id(userId, pageable).stream()
@@ -88,7 +88,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteByAdmin(Long commentId) {
-        getCommentById(commentId); // проверка, что комментарий существует
+        getCommentById(commentId);
         commentRepository.deleteById(commentId);
     }
 
@@ -98,12 +98,12 @@ public class CommentServiceImpl implements CommentService {
         Pageable pageable = PageRequest.of(params.getFrom() / params.getSize(), params.getSize(),
                 Sort.by("createdOn").descending());
 
-        // Проверка: существует ли автор (если указан)
+
         if (params.getAuthorId() != null) {
             getUserById(params.getAuthorId());
         }
 
-        // Проверка: существует ли событие (если указано)
+
         if (params.getEventId() != null) {
             getEventById(params.getEventId());
         }
@@ -140,9 +140,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto updateOwnComment(Long userId, Long commentId, UpdateCommentDto updateDto) {
-        getUserById(userId); // проверка, что пользователь существует
+        getUserById(userId);
 
-        Comment comment = getCommentById(commentId); // переиспользуем метод
+        Comment comment = getCommentById(commentId);
 
         if (!comment.getAuthor().getId().equals(userId)) {
             throw new ValidationException("User can update only their own comment");

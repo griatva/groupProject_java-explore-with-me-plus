@@ -15,24 +15,23 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EventParamsPublic {
 
-    private String text; // текст для поиска в содержимом аннотации и подробном описании события
+    private String text;              // text to search in the annotation and detailed event description
 
-    private List<Long> categories; // список идентификаторов категорий в которых будет вестись поиск
+    private List<Long> categories;    // list of category IDs to search within
 
-    private Boolean paid; // поиск только платных/бесплатных событий
+    private Boolean paid;             // search only paid or free events
 
-    private String rangeStart; // дата и время не раньше которых должно произойти событие
+    private String rangeStart;        // date and time not earlier than which the event should occur
 
-    private String rangeEnd; // дата и время не позже которых должно произойти событие
+    private String rangeEnd;          // date and time not later than which the event should occur
 
-    private boolean onlyAvailable = false; // только события у которых не исчерпан лимит запросов на участие
+    private boolean onlyAvailable = false; // only events with available participation slots
 
-    private String sort; // Вариант сортировки: по дате события или по количеству просмотров
+    private String sort;              // sorting option: by event date or by number of views
 
     @PositiveOrZero
-    private Integer from = PaginationDefaults.DEFAULT_FROM;  // количество событий, которые нужно пропустить // Default value : 0
+    private Integer from = PaginationDefaults.DEFAULT_FROM; // number of events to skip // default value: 0
 
     @Positive
-    private Integer size = PaginationDefaults.DEFAULT_SIZE;  // количество событий в наборе // Default value : 10
-
+    private Integer size = PaginationDefaults.DEFAULT_SIZE; // number of events in the result set // default value: 10
 }
